@@ -98,7 +98,7 @@ int main()
         {
          for (int i=0;i<4;i++) field[b[i].y][b[i].x]=colorNum;
 
-         colorNum=1;
+         colorNum=1 + rand() % 7;
          int n=rand()%7;
          for (int i=0;i<4;i++)
            {
@@ -124,7 +124,7 @@ int main()
         if (count<row) k--;
     }
 
-    dx=0; rotate=0; delay=0.3;
+    dx=0; rotate=0; delay=1;
 
     /////////draw//////////
     window.clear(Color::White);
