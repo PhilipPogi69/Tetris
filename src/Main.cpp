@@ -2,11 +2,11 @@
 #include <time.h>
 using namespace sf;
 
-const int M = 20;
-const int N = 10;
+const int column = 20;
+const int row = 10;
 bool check();
 
-int field[M][N] = {0};
+int field[column][row] = {0};
 
 struct Point
 {int x,y;} a[4], b[4];
@@ -25,7 +25,7 @@ int figures[7][4] =
 bool check()
 {
    for (int i=0;i<4;i++){
-      if (a[i].x<0 || a[i].x>=N || a[i].y>=M) return 0;
+      if (a[i].x<0 || a[i].x>=row || a[i].y>=column) return 0;
       else if (field[a[i].y][a[i].x]) return 0;
    }
    return 1;
@@ -40,8 +40,8 @@ int main()
 
     Texture t1,t2,t3;
     t1.loadFromFile("src/images/tiles.png");
-    t2.loadFromFile("images/background.png");
-    t3.loadFromFile("images/frame.png");
+    t2.loadFromFile("src/images/maxresdefault.jpg");
+    t3.loadFromFile("src/images/frame.png");
 
     Sprite s(t1), background(t2), frame(t3);
 
@@ -98,7 +98,7 @@ int main()
         {
          for (int i=0;i<4;i++) field[b[i].y][b[i].x]=colorNum;
 
-         colorNum=1+rand()%7;
+         colorNum=1;
          int n=rand()%7;
          for (int i=0;i<4;i++)
            {
@@ -106,30 +106,30 @@ int main()
             a[i].y = figures[n][i] / 2;
            }
         }
-
          timer=0;
       }
 
+
+
     ///////check lines//////////
-    int k=M-1;
-    for (int i=M-1;i>0;i--)
+    int k=column-1;
+    for (int i=column-1;i>0;i--)
     {
         int count=0;
-        for (int j=0;j<N;j++)
+        for (int j=0;j<row;j++)
         {
             if (field[i][j]) count++;
             field[k][j]=field[i][j];
         }
-        if (count<N) k--;
+        if (count<row) k--;
     }
 
     dx=0; rotate=0; delay=0.3;
 
     /////////draw//////////
     window.clear(Color::White);
-
-    for (int i=0;i<M;i++)
-     for (int j=0;j<N;j++)
+    for (int i=0;i<column;i++)
+     for (int j=0;j<row;j++)
        {
          if (field[i][j]==0) continue;
          s.setTextureRect(IntRect(field[i][j]*18,0,18,18));
@@ -146,7 +146,6 @@ int main()
         window.draw(s);
       }
 
-    window.draw(frame);
     window.display();
     }
 
