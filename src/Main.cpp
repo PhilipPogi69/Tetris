@@ -4,7 +4,11 @@ using namespace sf;
 
 const int column = 20;
 const int row = 10;
+
+void rotates(bool rotate);
 bool check();
+int rands;
+
 
 int field[column][row] = {0};
 
@@ -56,6 +60,7 @@ int main()
         clock.restart();
         timer+=time;
 
+
         Event e;
         while (window.pollEvent(e))
         {
@@ -69,25 +74,12 @@ int main()
 			}
         }
 
-    if (Keyboard::isKeyPressed(Keyboard::Down)) delay=0.05;
+    if (Keyboard::isKeyPressed(Keyboard::Down)) delay=0.06;
 
     //// <- Move -> ///
     for (int i=0;i<4;i++)  { b[i]=a[i]; a[i].x+=dx; }
     if (!check()) for (int i=0;i<4;i++) a[i]=b[i];
 
-    //////Rotate//////
-    if (rotate)
-      {
-        Point p = a[1]; //center of rotation
-        for (int i=0;i<4;i++)
-          {
-            int x = a[i].y-p.y;
-            int y = a[i].x-p.x;
-            a[i].x = p.x - x;
-            a[i].y = p.y + y;
-           }
-           if (!check()) for (int i=0;i<4;i++) a[i]=b[i];
-      }
 
     ///////Tick//////
     if (timer>delay)
@@ -99,7 +91,9 @@ int main()
          for (int i=0;i<4;i++) field[b[i].y][b[i].x]=colorNum;
 
          colorNum=1 + rand() % 7;
-         int n=rand()%7;
+         int n = rand() % 7;
+         rands = n;
+
          for (int i=0;i<4;i++)
            {
             a[i].x = figures[n][i] % 2;
@@ -109,8 +103,21 @@ int main()
          timer=0;
       }
 
-
-
+    //////Rotate//////
+    rotates(rotate);
+    if (!check()) for (int i=0;i<4;i++){
+             a[i]=b[i];
+              if(rands){
+                if(a[i].x < 5){
+                  b[i]=a[i];
+                  a[i].x+= 3;
+                  a[i].x+=dx;
+                  rotates(rotate);
+                }else{
+                  a[i].x-= 3;
+                }
+              }
+           }
     ///////check lines//////////
     int k=column-1;
     for (int i=column-1;i>0;i--)
@@ -150,4 +157,19 @@ int main()
     }
 
     return 0;
+}
+
+void rotates(bool rotate){
+   if (rotate)
+      {
+        Point p = a[1]; //center of rotation
+        for (int i=0;i<4;i++)
+          {
+            int x = a[i].y-p.y;
+            int y = a[i].x-p.x;
+            a[i].x = p.x + x;
+            a[i].y = p.y - y;
+           }
+
+      }
 }
