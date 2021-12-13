@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
 
-
 using namespace sf;
 using namespace std;
 
@@ -15,18 +14,19 @@ bool check();
 int field[column][row] = {0};
 
 struct Point
-{int x,y;} a[4], b[4];
+{int x,y;} a[4]={{1,0},{1,1},{1,2},{1,3}}, b[4];
 
-int figures[7][4] =
+Point figures[7][4] =
 {
-    1,3,5,7, // I
-    2,4,5,7, // Z
-    3,5,4,6, // S
-    3,5,4,7, // T
-    2,3,5,7, // L
-    3,5,7,6, // J
-    2,3,4,5, // O
+ {{1,0},{1,1},{1,2},{1,3}},// I
+ {{0,1},{1,1},{1,2},{2,2}},
+ {{0,1},{1,1},{2,1},{1,2}},
+ {{0,0},{1,0},{1,1},{1,2}},
+ {{0,1},{1,1},{0,2},{1,2}},
+ {{0,2},{1,1},{1,2},{2,1}},
+ {{1,0},{1,1},{1,2},{2,0}} // z
 };
+
 
 bool check()
 {
@@ -46,7 +46,7 @@ int main()
 
     Texture t1,t2,t3;
     t1.loadFromFile("src/images/tiles.png");
-    t2.loadFromFile("src/images/maxresdefault.jpg");
+    t2.loadFromFile("src/images/background.png");
     t3.loadFromFile("src/images/frame.png");
 
     Sprite s(t1), background(t2), frame(t3);
@@ -97,8 +97,8 @@ int main()
          int n =rand()%7;
          for (int i=0;i<4;i++)
            {
-            a[i].x = figures[n][i] % 2;
-            a[i].y = figures[n][i] / 2;
+            a[i].x = figures[n][i].x;
+            a[i].y = figures[n][i].y;
            }
            block = n;
         }
@@ -125,6 +125,7 @@ int main()
 
     /////////draw//////////
     window.clear(Color::White);
+    window.draw(background);
     for (int i=0;i<column;i++)
      for (int j=0;j<row;j++)
        {
