@@ -57,7 +57,7 @@ int main()
 {
 	srand(time(0));
 
-	RenderWindow window(VideoMode(320, 480), "The Game!");
+	RenderWindow window(VideoMode(320, 480), " TETRIS ");
 
 	Texture t1, t2, t3;
 	t1.loadFromFile("src/images/tiles.png");
@@ -70,8 +70,20 @@ int main()
 	bool rotate = 0;
 	int colorNum = 1;
 	float timer = 0, delay = 0.3;
+	int scoreCount;
 
 	Clock clock;
+
+	sf::Text score;
+	sf::Font font;
+	font.loadFromFile("Forwa_font.TTF");
+	score.setFont(font);
+	score.setCharacterSize(15);
+	score.setFillColor(sf::Color::Black);
+	score.setPosition(10, 450);
+	sf::Vector2<float> score_scale(1.5f, 1.5f);
+	score.setScale(score_scale);
+	score.setString("Lines: 0");
 
 	while (window.isOpen())
 	{
@@ -149,7 +161,19 @@ int main()
 			}
 			timer = 0;
 		}
+		char temp[256];
+		sprintf_s(temp, "Scores: %i", scoreCount);
+		score.setString(temp);
 
+		// Scoring
+		for (int c = 19; c > 0; c--)
+		{
+			if (field[c][0] != 0 && field[c][1] != 0 && field[c][2] != 0 && field[c][3] != 0 && field[c][4] != 0 && field[c][5] != 0 && field[c][6] != 0 && field[c][7] != 0 && field[c][8] != 0 && field[c][9] != 0)
+
+			{
+				scoreCount += 10;
+			}
+		}
 		///////check lines//////////
 		int k = column - 1;
 		for (int i = column - 1; i > 0; i--)
@@ -163,6 +187,15 @@ int main()
 			}
 			if (count < row)
 				k--;
+		}
+
+		//If game over, then close application
+		for (int i = 0; i < row; i++)
+		{
+			if (field[1][i] != 0)
+			{
+				window.close();
+			}
 		}
 
 		dx = 0;
@@ -193,10 +226,10 @@ int main()
 			s.move(28, 31); //offset
 			window.draw(s);
 		}
-
+		window.draw(score);
 		window.draw(frame);
 		window.display();
 	}
-
+	//Displays Game Over Screen & Scores
 	return 0;
 }
