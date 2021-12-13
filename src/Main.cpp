@@ -1,9 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
-using namespace sf;
 
+
+using namespace sf;
+using namespace std;
+
+void wallkick(bool rotate);
+void rotates(bool rotate);
 const int column = 20;
 const int row = 10;
+int block;
 bool check();
 
 int field[column][row] = {0};
@@ -76,18 +82,7 @@ int main()
     if (!check()) for (int i=0;i<4;i++) a[i]=b[i];
 
     //////Rotate//////
-    if (rotate)
-      {
-        Point p = a[1]; //center of rotation
-        for (int i=0;i<4;i++)
-          {
-            int x = a[i].y-p.y;
-            int y = a[i].x-p.x;
-            a[i].x = p.x - x;
-            a[i].y = p.y + y;
-           }
-           if (!check()) for (int i=0;i<4;i++) a[i]=b[i];
-      }
+    wallkick(rotate);
 
     ///////Tick//////
     if (timer>delay)
@@ -99,20 +94,22 @@ int main()
          for (int i=0;i<4;i++) field[b[i].y][b[i].x]=colorNum;
 
          colorNum=1 + rand() % 7;
-         int n=rand()%7;
+         int n =rand()%7;
          for (int i=0;i<4;i++)
            {
             a[i].x = figures[n][i] % 2;
             a[i].y = figures[n][i] / 2;
            }
+           block = n;
         }
+
          timer=0;
       }
 
 
 
     ///////check lines//////////
-    int k=column-1;
+    int k =column-1;
     for (int i=column-1;i>0;i--)
     {
         int count=0;
@@ -150,4 +147,82 @@ int main()
     }
 
     return 0;
+}
+
+void rotates(bool rotate) {
+  if (rotate)
+      {
+        Point p = a[1]; //center of rotation
+        for (int i=0;i<4;i++)
+          {
+            int x = a[i].y - p.y;
+            int y = a[i].x - p.x;
+            a[i].x = p.x - x;
+            a[i].y = p.y + y;
+           }
+           if (!check()) for (int i=0;i<4;i++)
+            a[i]=b[i];
+
+
+           ;
+      }
+}
+
+void wallkick(bool rotate){
+  if (rotate)
+      {
+        Point p = a[1]; //center of rotation
+        for (int i=0;i<4;i++)
+          {
+            int x = a[i].y - p.y;
+            int y = a[i].x - p.x;
+            a[i].x = p.x - x;
+            a[i].y = p.y + y;
+           }
+           if (!check()) for (int i=0;i<4;i++){
+             switch (block)
+             {
+             case 0:
+               if(a[i].x > 8){
+                a[i].x-= 4;
+                }
+                a[i].x+= 1;
+               break;
+             case 1:
+               if(a[i].x > 7){
+                a[i].x-= 2;
+                }
+                a[i].x+=1;
+               break;
+               case 2:
+               if(a[i].x > 7){
+                a[i].x-= 2;
+                }
+                a[i].x+=1;
+               break;
+               case 3:
+               if(a[i].x > 7){
+                a[i].x-= 2;
+                }
+                a[i].x+=1;
+               break;
+               case 4:
+               if(a[i].x > 7){
+                a[i].x-= 2;
+                }
+                a[i].x+=1;
+               break;
+               case 5:
+               if(a[i].x > 7){
+                a[i].x-= 2;
+                }
+                a[i].x+=1;
+               break;
+             default:
+               break;
+             }
+           }
+
+
+      }
 }
