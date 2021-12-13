@@ -2,6 +2,8 @@
 #include <time.h>
 using namespace sf;
 
+int GameOver(int s);
+
 const int column = 20;
 const int row = 10;
 bool check();
@@ -57,7 +59,7 @@ int main()
 {
 	srand(time(0));
 
-	RenderWindow window(VideoMode(320, 480), " TETRIS ");
+	RenderWindow window(VideoMode(320, 480), " TETRIS ", sf::Style::Close | sf::Style::Titlebar);
 
 	Texture t1, t2, t3;
 	t1.loadFromFile("src/images/tiles.png");
@@ -231,5 +233,39 @@ int main()
 		window.display();
 	}
 	//Displays Game Over Screen & Scores
+	GameOver(scoreCount);
+	return 0;
+}
+
+// GameOver Function
+int GameOver(int s)
+{
+	sf::Text score;
+	sf::Font font;
+	font.loadFromFile("Oswald-Heavy.ttf");
+	score.setFont(font);
+	score.setCharacterSize(25);
+	score.setFillColor(sf::Color::White);
+	score.setPosition(70, 50);
+	sf::Vector2<float> score_scale(1.5f, 1.5f);
+	score.setScale(score_scale);
+	char temp[256];
+	sprintf_s(temp, " < GAME OVER > \nYOUR SCORE : %i", s);
+	score.setString(temp);
+
+	sf::RenderWindow window(sf::VideoMode(400, 200), "GAME OVER!", sf::Style::Close | sf::Style::Titlebar);
+
+	while (window.isOpen())
+	{
+		sf::Event e;
+		while (window.pollEvent(e))
+		{
+			if (e.type == sf::Event::Closed)
+				window.close();
+		}
+		window.draw(score);
+		window.display();
+	}
+
 	return 0;
 }
