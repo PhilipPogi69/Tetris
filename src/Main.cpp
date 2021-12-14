@@ -72,11 +72,11 @@ int main()
 	bool rotate = 0;
 	int colorNum = 1;
 	float timer = 0, delay = 0.3;
-	int scoreCount;
+	int scoreCount, lineClear = 0;
 
 	Clock clock;
-
-	sf::Text score;
+	//set up text font
+	sf::Text score, line;
 	sf::Font font;
 	font.loadFromFile("Forwa_font.TTF");
 	score.setFont(font);
@@ -85,7 +85,14 @@ int main()
 	score.setPosition(10, 450);
 	sf::Vector2<float> score_scale(1.5f, 1.5f);
 	score.setScale(score_scale);
-	score.setString("Lines: 0");
+
+	font.loadFromFile("Forwa_font.TTF");
+	line.setFont(font);
+	line.setCharacterSize(15);
+	line.setFillColor(sf::Color::Black);
+	line.setPosition(10, 410);
+	sf::Vector2<float> line_scale(1.5f, 1.5f);
+	line.setScale(line_scale);
 
 	while (window.isOpen())
 	{
@@ -163,17 +170,22 @@ int main()
 			}
 			timer = 0;
 		}
+
 		char temp[256];
-		sprintf_s(temp, "Scores: %i", scoreCount);
+		sprintf_s(temp, "Scores: %d", scoreCount);
 		score.setString(temp);
 
-		// Scoring
+		sprintf_s(temp, "LIne: %d", lineClear);
+		line.setString(temp);
+
+		// Scoring and total line clear
 		for (int c = 19; c > 0; c--)
 		{
 			if (field[c][0] != 0 && field[c][1] != 0 && field[c][2] != 0 && field[c][3] != 0 && field[c][4] != 0 && field[c][5] != 0 && field[c][6] != 0 && field[c][7] != 0 && field[c][8] != 0 && field[c][9] != 0)
 
 			{
 				scoreCount += 10;
+				lineClear++;
 			}
 		}
 		///////check lines//////////
@@ -228,6 +240,7 @@ int main()
 			s.move(28, 31); //offset
 			window.draw(s);
 		}
+		window.draw(line);
 		window.draw(score);
 		window.draw(frame);
 		window.display();
@@ -244,16 +257,16 @@ int GameOver(int s)
 	sf::Font font;
 	font.loadFromFile("Oswald-Heavy.ttf");
 	score.setFont(font);
-	score.setCharacterSize(25);
+	score.setCharacterSize(40);
 	score.setFillColor(sf::Color::White);
-	score.setPosition(70, 50);
+	score.setPosition(90, 70);
 	sf::Vector2<float> score_scale(1.5f, 1.5f);
 	score.setScale(score_scale);
 	char temp[256];
-	sprintf_s(temp, " < GAME OVER > \nYOUR SCORE : %i", s);
+	sprintf_s(temp, " < GAME OVER > \nYOUR SCORE : %d", s);
 	score.setString(temp);
 
-	sf::RenderWindow window(sf::VideoMode(400, 200), "GAME OVER!", sf::Style::Close | sf::Style::Titlebar);
+	sf::RenderWindow window(sf::VideoMode(600, 300), "GAME OVER!", sf::Style::Close | sf::Style::Titlebar);
 
 	while (window.isOpen())
 	{
