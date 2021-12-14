@@ -186,7 +186,7 @@ void wallkick(bool rotate){
                if(a[i].x > 8){
                 a[i].x-= 4;
                 }
-                a[i].x+= 1;
+                a[i].x+= 2;
                break;
              case 1:
                if(a[i].x > 7){
