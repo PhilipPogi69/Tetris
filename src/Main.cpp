@@ -81,7 +81,7 @@ int main()
 
 	/*sf::SoundBuffer buffer;
 
-	if (!buffer.loadFromFile("src/music/GameOverQT.wav"))
+	if (!buffer.loadFromFile("src/music/GameOverQT.wav")) or "src\music\GameOverGO.wav"
 	{
 		std::cout << "ERROR" << std::endl;
 	}
@@ -89,7 +89,7 @@ int main()
 	sf::Sound sound;
 	sound.setBuffer(buffer);
 	sound.play();
-	sound.setLoop(true);*/
+	sound.setLoop(false);*/
 
 	sf::Music GameBGM;
 
