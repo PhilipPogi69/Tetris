@@ -61,6 +61,17 @@ bool check()
 
 int main()
 {
+
+	sf::SoundBuffer Welcome;
+	sf::Sound round;
+
+	if (!Welcome.loadFromFile("src/music/Hello There (Obi Wan) - Sound Effect (HD) (mp3cut.net).wav"))
+	{
+		std::cout << "ERROR" << std::endl;
+	}
+
+	round.setBuffer(Welcome);
+
 	srand(time(0));
 
 	RenderWindow window(VideoMode(320, 480), "The Game!");
@@ -72,12 +83,17 @@ int main()
 
 	sf::Sprite s(t1), background(t2), frame(t3);
 
+
+
 	int dx = 0;
 	bool rotate = 0;
 	int colorNum = 1;
 	float timer = 0, delay = 0.3;
 
 	Clock clock;
+	round.play();
+	round.setVolume(70);
+
 
 	/////////Sounds//////////
 
@@ -89,8 +105,17 @@ int main()
 		std::cout << "ERROR" << std::endl;
 	}
 
-	round.setBuffer(GameOver);*/
+	round.setBuffer(GameOver);
 
+	sf::SoundBuffer ClearLine;
+	sf::Sound bound;
+
+	if (!ClearLine.loadFromFile("src/music/GameOverGO.wav"))
+	{
+		std::cout << "ERROR" << std::endl;
+	}
+
+	bound.setBuffer(ClearLine);*/
 
 	sf::SoundBuffer SoundKeys;
 	sf::Sound sound;
