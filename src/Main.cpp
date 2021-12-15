@@ -65,7 +65,7 @@ int main()
 	sf::SoundBuffer Welcome;
 	sf::Sound round;
 
-	if (!Welcome.loadFromFile("src/music/Hello There (Obi Wan) - Sound Effect (HD) (mp3cut.net).wav"))
+	if (!Welcome.loadFromFile("src/music/Hello There.wav"))
 	{
 		std::cout << "ERROR" << std::endl;
 	}
@@ -83,19 +83,18 @@ int main()
 
 	sf::Sprite s(t1), background(t2), frame(t3);
 
-
-
 	int dx = 0;
 	bool rotate = 0;
 	int colorNum = 1;
 	float timer = 0, delay = 0.3;
 
 	Clock clock;
+
 	round.play();
 	round.setVolume(70);
 
 
-	/////////Sounds//////////
+	/////////GameOver Sound//////////
 
 	/*sf::SoundBuffer GameOver;
 	sf::Sound round;
@@ -105,22 +104,12 @@ int main()
 		std::cout << "ERROR" << std::endl;
 	}
 
-	round.setBuffer(GameOver);
-
-	sf::SoundBuffer ClearLine;
-	sf::Sound bound;
-
-	if (!ClearLine.loadFromFile("src/music/GameOverGO.wav"))
-	{
-		std::cout << "ERROR" << std::endl;
-	}
-
-	bound.setBuffer(ClearLine);*/
+	round.setBuffer(GameOver);*/
 
 	sf::SoundBuffer SoundKeys;
 	sf::Sound sound;
 
-	if (!SoundKeys.loadFromFile("src/music/ClearLineS.wav"))
+	if (!SoundKeys.loadFromFile("src/music/ClearLineS (2).wav"))
 	{
 		std::cout << "ERROR" << std::endl;
 	}
@@ -128,7 +117,7 @@ int main()
 	sound.setBuffer(SoundKeys);
 
 
-///////////Music///////////
+	///////////Music///////////
 
 	sf::Music GameBGM;
 
@@ -164,6 +153,8 @@ int main()
 
 				else if (e.key.code == Keyboard::Right)
 				dx = 1;
+
+				//SoundKeys
 				sound.play();
 				sound.setVolume(10);
 
@@ -247,9 +238,6 @@ int main()
 		dx = 0;
 		rotate = 0;
 		delay = 1;
-		//sound.setBuffer(ClearLine);
-		//sound.play();
-		//sound.setVolume(10);
 
 		/////////draw//////////
 		window.clear(Color::White);
