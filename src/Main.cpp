@@ -53,11 +53,11 @@ int main()
 
 	srand(time(0));
 
-	RenderWindow window(VideoMode(580, 480), "Tetris.exe");
+	RenderWindow window(VideoMode(480, 480), "Tetris.exe");
 
 	Texture t1, t2, t3;
 	t1.loadFromFile("src/images/new tiles.png");
-	t2.loadFromFile("src/images/background.png");
+	t2.loadFromFile("src/images/new background.png");
 	t3.loadFromFile("src/images/newframe.png");
 
 	Sprite s(t1), background(t2), frame(t3);
