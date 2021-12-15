@@ -70,7 +70,7 @@ int main()
 	t2.loadFromFile("src/images/background.jpg");
 	t3.loadFromFile("src/images/frame.png");
 
-	Sprite s(t1), background(t2), frame(t3);
+	sf::Sprite s(t1), background(t2), frame(t3);
 
 	int dx = 0;
 	bool rotate = 0;
@@ -79,17 +79,15 @@ int main()
 
 	Clock clock;
 
-	/*sf::SoundBuffer buffer;
+	sf::SoundBuffer ClearLine;
+	sf::Sound sound;
 
-	if (!buffer.loadFromFile("src/music/GameOverQT.wav")) or "src\music\GameOverGO.wav"
+	if (!ClearLine.loadFromFile("src/music/ClearLineS.wav"))
 	{
 		std::cout << "ERROR" << std::endl;
 	}
 
-	sf::Sound sound;
-	sound.setBuffer(buffer);
-	sound.play();
-	sound.setLoop(false);*/
+	sound.setBuffer(ClearLine);
 
 	sf::Music GameBGM;
 
@@ -100,7 +98,7 @@ int main()
 
 	GameBGM.play();
 	GameBGM.setLoop(true);
-	GameBGM.setVolume(35);
+	GameBGM.setVolume(30);
 
 	while (window.isOpen())
 	{
@@ -118,15 +116,22 @@ int main()
 			{
 				if (e.key.code == Keyboard::Up)
 					rotate = true;
+
 				else if (e.key.code == Keyboard::Left)
+
 					dx = -1;
+
 				else if (e.key.code == Keyboard::Right)
-					dx = 1;
+				dx = 1;
+				sound.play();
+				sound.setVolume(10);
+
 			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Down))
 			delay = 0.05;
+
 
 		//// <- Move -> ///
 		for (int i = 0; i < 4; i++)
@@ -137,6 +142,7 @@ int main()
 		if (!check())
 			for (int i = 0; i < 4; i++)
 				a[i] = b[i];
+
 
 		//////Rotate//////
 		if (rotate)
@@ -180,7 +186,10 @@ int main()
 		}
 
 		///////check lines//////////
+
+
 		int k = column - 1;
+
 		for (int i = column - 1; i > 0; i--)
 		{
 			int count = 0;
@@ -189,19 +198,24 @@ int main()
 				if (field[i][j])
 					count++;
 				field[k][j] = field[i][j];
+
 			}
 			if (count < row)
-				k--;
+			k--;
 		}
 
 		dx = 0;
 		rotate = 0;
 		delay = 1;
+		//sound.setBuffer(ClearLine);
+		//sound.play();
+		//sound.setVolume(10);
 
 		/////////draw//////////
 		window.clear(Color::White);
 		for (int i = 0; i < column; i++)
 			for (int j = 0; j < row; j++)
+
 			{
 				if (field[i][j] == 0)
 					continue;
@@ -219,8 +233,10 @@ int main()
 			window.draw(s);
 		}
 
+
 		window.display();
 	}
+
 
 	return 0;
 }
