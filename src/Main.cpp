@@ -19,17 +19,18 @@ int field[column][row] = { 0 };
 int block;
 
 struct Point
-{int x,y;} a[4]={{1,0},{1,1},{1,2},{1,3}}, b[4];
-
-Point figures[7][4] =
 {
- {{1,0},{1,1},{1,2},{1,3}},// I
- {{0,1},{1,1},{1,2},{2,2}},
- {{0,1},{1,1},{2,1},{1,2}},
- {{0,0},{1,0},{1,1},{1,2}},
- {{0,1},{1,1},{0,2},{1,2}},
- {{0,2},{1,1},{1,2},{2,1}},
- {{1,0},{1,1},{1,2},{2,0}} // z
+	int x, y;
+} a[4] = { { 1, 0 }, { 1, 1 }, { 1, 2 }, { 1, 3 } }, b[4];
+
+Point figures[7][4] = {
+	{ { 1, 0 }, { 1, 1 }, { 1, 2 }, { 1, 3 } }, // I
+	{ { 0, 1 }, { 1, 1 }, { 1, 2 }, { 2, 2 } },
+	{ { 0, 1 }, { 1, 1 }, { 2, 1 }, { 1, 2 } },
+	{ { 0, 0 }, { 1, 0 }, { 1, 1 }, { 1, 2 } },
+	{ { 0, 1 }, { 1, 1 }, { 0, 2 }, { 1, 2 } },
+	{ { 0, 2 }, { 1, 1 }, { 1, 2 }, { 2, 1 } },
+	{ { 1, 0 }, { 1, 1 }, { 1, 2 }, { 2, 0 } } // z
 };
 
 bool check()
@@ -46,6 +47,16 @@ bool check()
 
 int main()
 {
+	sf::SoundBuffer Welcome;
+	sf::Sound round;
+
+	if (!Welcome.loadFromFile("src/music/Hello There.wav"))
+	{
+		std::cout << "ERROR" << std::endl;
+	}
+
+	round.setBuffer(Welcome);
+
 	srand(time(0));
 
 	RenderWindow window(VideoMode(320, 480), " TETRIS ", sf::Style::Close | sf::Style::Titlebar);
@@ -53,7 +64,7 @@ int main()
 	Texture t1, t2, t3;
 	t1.loadFromFile("src/images/tiles.png");
 	t2.loadFromFile("src/images/background.jpg");
-	t3.loadFromFile("src/images/frame.png");
+	t3.loadFromFile("src/images/frame (1).png");
 
 	Sprite s(t1), background(t2), frame(t3);
 
@@ -64,6 +75,20 @@ int main()
 	int scoreCount = 0, lineClear = 0;
 
 	Clock clock;
+
+	round.play();
+	round.setVolume(70);
+
+	sf::SoundBuffer SoundKeys;
+	sf::Sound sound;
+
+	if (!SoundKeys.loadFromFile("src/music/ClearLineS (2).wav"))
+	{
+		std::cout << "ERROR" << std::endl;
+	}
+
+	sound.setBuffer(SoundKeys);
+
 	//set up text font
 	sf::Text score, line;
 	sf::Font font;
@@ -122,6 +147,9 @@ int main()
 						dx = -1;
 					else if (e.key.code == Keyboard::Right)
 						dx = 1;
+
+					sound.play();
+					sound.setVolume(10);
 				}
 			}
 
@@ -317,6 +345,16 @@ void wallkick(bool rotate)
 // GameOver Function
 int GameOver(int s)
 {
+	sf::SoundBuffer GameOver;
+	sf::Sound round;
+	if (!GameOver.loadFromFile("src/music/GameOverGO.wav"))
+	{
+		std::cout << "ERROR" << std::endl;
+	}
+	round.setBuffer(GameOver);
+
+	round.play();
+	round.setVolume(70);
 
 	sf::Text score;
 	sf::Font font;
