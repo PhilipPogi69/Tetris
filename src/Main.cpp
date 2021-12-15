@@ -79,15 +79,31 @@ int main()
 
 	Clock clock;
 
-	sf::SoundBuffer ClearLine;
-	sf::Sound sound;
+	/////////Sounds//////////
 
-	if (!ClearLine.loadFromFile("src/music/ClearLineS.wav"))
+	/*sf::SoundBuffer GameOver;
+	sf::Sound round;
+
+	if (!GameOver.loadFromFile("src/music/GameOverGO.wav"))
 	{
 		std::cout << "ERROR" << std::endl;
 	}
 
-	sound.setBuffer(ClearLine);
+	round.setBuffer(GameOver);*/
+
+
+	sf::SoundBuffer SoundKeys;
+	sf::Sound sound;
+
+	if (!SoundKeys.loadFromFile("src/music/ClearLineS.wav"))
+	{
+		std::cout << "ERROR" << std::endl;
+	}
+
+	sound.setBuffer(SoundKeys);
+
+
+///////////Music///////////
 
 	sf::Music GameBGM;
 
@@ -198,7 +214,6 @@ int main()
 				if (field[i][j])
 					count++;
 				field[k][j] = field[i][j];
-
 			}
 			if (count < row)
 			k--;
