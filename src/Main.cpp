@@ -19,36 +19,17 @@ int field[column][row] = { 0 };
 int block;
 
 struct Point
-{
-	int x, y;
-} a[4], b[4];
+{int x,y;} a[4]={{1,0},{1,1},{1,2},{1,3}}, b[4];
 
-int figures[7][4] = {
-	1, 3, 5, 7, // I
-	2,
-	4,
-	5,
-	7, // Z
-	3,
-	5,
-	4,
-	6, // S
-	3,
-	5,
-	4,
-	7, // T
-	2,
-	3,
-	5,
-	7, // L
-	3,
-	5,
-	7,
-	6, // J
-	2,
-	3,
-	4,
-	5, // O
+Point figures[7][4] =
+{
+ {{1,0},{1,1},{1,2},{1,3}},// I
+ {{0,1},{1,1},{1,2},{2,2}},
+ {{0,1},{1,1},{2,1},{1,2}},
+ {{0,0},{1,0},{1,1},{1,2}},
+ {{0,1},{1,1},{0,2},{1,2}},
+ {{0,2},{1,1},{1,2},{2,1}},
+ {{1,0},{1,1},{1,2},{2,0}} // z
 };
 
 bool check()
@@ -71,7 +52,7 @@ int main()
 
 	Texture t1, t2, t3;
 	t1.loadFromFile("src/images/tiles.png");
-	t2.loadFromFile("src/images/background.png");
+	t2.loadFromFile("src/images/background.jpg");
 	t3.loadFromFile("src/images/frame.png");
 
 	Sprite s(t1), background(t2), frame(t3);
@@ -174,13 +155,13 @@ int main()
 					for (int i = 0; i < 4; i++)
 						field[b[i].y][b[i].x] = colorNum;
 
-					colorNum = 1 + rand() % 7;
+					colorNum = 1 + rand() % 6;
 					int n = rand() % 7;
 					block = n;
 					for (int i = 0; i < 4; i++)
 					{
-						a[i].x = figures[n][i] % 2;
-						a[i].y = figures[n][i] / 2;
+						a[i].x = figures[n][i].x;
+						a[i].y = figures[n][i].y;
 					}
 				}
 				timer = 0;
@@ -261,6 +242,7 @@ int main()
 			window.display();
 		}
 		//Displays Game Over Screen & Scores
+		GameBGM.stop();
 		GameOver(scoreCount);
 		return 0;
 	}
@@ -335,6 +317,7 @@ void wallkick(bool rotate)
 // GameOver Function
 int GameOver(int s)
 {
+
 	sf::Text score;
 	sf::Font font;
 	font.loadFromFile("Oswald-Heavy.ttf");
