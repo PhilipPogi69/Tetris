@@ -1,5 +1,11 @@
+#include <MMsystem.h>
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include <time.h>
+#include <windows.h>
+
+using namespace std;
 using namespace sf;
 
 int GameOver(int s);
@@ -102,6 +108,26 @@ int main()
 		clock.restart();
 		timer += time;
 
+
+	Clock clock;
+
+	Music GameBGM;
+
+	if (!GameBGM.openFromFile("src/music/GameMusic.ogg"))
+	{
+		std::cout << "ERROR" << std::endl;
+	}
+
+	GameBGM.play();
+	GameBGM.setLoop(true);
+	GameBGM.setVolume(35);
+
+	while (window.isOpen())
+	{
+		float time = clock.getElapsedTime().asSeconds();
+		clock.restart();
+		timer += time;
+
 		Event e;
 		while (window.pollEvent(e))
 		{
@@ -151,7 +177,7 @@ int main()
 
 				colorNum = 1 + rand() % 7;
 				int n = rand() % 7;
-        block = n;
+        		block = n;
 				for (int i = 0; i < 4; i++)
 				{
 					a[i].x = figures[n][i] % 2;
@@ -238,7 +264,7 @@ int main()
 	//Displays Game Over Screen & Scores
 	GameOver(scoreCount);
 	return 0;
-}
+}}
 
 
 void wallkick(bool rotate){
